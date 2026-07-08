@@ -6,6 +6,20 @@ Built with FastAPI + React. Detection methodology follows Barber & Odean's resea
 
 ---
 
+## Screenshots
+
+### Bias report
+![Bias report](docs/report.png)
+
+### Cost of bias & flagged trades
+![Flagged trades](docs/flagged-trades.png)
+
+### Panic-sell timeline
+![Timeline](docs/timeline.png)
+
+### Trade log
+![Trade log](docs/trades.png)
+
 ## The idea
 
 Retail investors lose money to predictable behavioral patterns: selling into crashes, chasing stocks that have already run up, and churning their portfolios. Most people can't see these patterns in their own history because each individual trade felt justified at the time.
