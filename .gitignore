@@ -1,0 +1,56 @@
+# --- secrets & data (never publish) ---
+.env
+*.db
+biasguard.db
+
+# --- private prep docs ---
+DEFENSE.md
+
+# --- patch-script backups ---
+*.bak
+
+# --- python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- node / vite ---
+node_modules/
+dist/
+.vite/
+
+# --- os / editor ---
+.DS_Store
+.vscode/
+.idea/
+
+# --- one-off patch & diagnostic scripts ---
+add_*.py
+fix_*.py
+harden_*.py
+make_*.py
+find_panic_date.py
+
+# --- numbered backups ---
+*.bak2
+*.bak3
+
+# --- FAR-Trans research scratch (separate project, not BiasGuard) ---
+snapshots/
+*.parquet
+02_explore_stockvis.py
+explore_far_trans_v2.py
+check_stocks_only.py
+detect_biases.py
+holdout_validation.py
+inspect_flags.py
+inspection_report.txt
+output.txt
+
+# --- backend diagnostic one-offs ---
+backend/find_fomo_date.py
+backend/probe_engine.py
+backend/probe_fomo.py
+backend/inspect_db.py
+backend/cost_of_bias.py

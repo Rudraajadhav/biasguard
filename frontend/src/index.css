@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-ink-900 text-fog-100 font-sans antialiased;
+    /* subtle atmospheric depth — a faint radial glow top-center */
+    background-image:
+      radial-gradient(
+        ellipse 80% 50% at 50% -10%,
+        rgba(94, 234, 212, 0.06),
+        transparent
+      );
+    background-attachment: fixed;
+  }
+
+  /* numbers everywhere use tabular figures so they don't jitter */
+  .nums {
+    font-family: 'IBM Plex Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: rgba(94, 234, 212, 0.25);
+  }
+
+  /* slim, dark scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #0a0c10; }
+  ::-webkit-scrollbar-thumb {
+    background: #2b323f;
+    border-radius: 6px;
+    border: 2px solid #0a0c10;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4250; }
+}
+
+@layer components {
+  /* The faint grid texture used on backgrounds */
+  .grid-texture {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Panel — the core surface unit */
+  .panel {
+    @apply bg-ink-800 border border-ink-600 rounded-xl;
+  }
+
+  /* Input fields */
+  .field {
+    @apply w-full bg-ink-900 border border-ink-600 rounded-lg px-4 py-3
+           text-fog-100 placeholder-fog-500 outline-none transition-all
+           focus:border-mint focus:shadow-glow;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply bg-mint text-ink-900 font-semibold rounded-lg px-5 py-3
+           transition-all hover:brightness-110 active:scale-[0.98]
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* Ghost button */
+  .btn-ghost {
+    @apply border border-ink-600 text-fog-300 font-medium rounded-lg
+           px-5 py-3 transition-all hover:border-ink-500 hover:text-fog-100
+           active:scale-[0.98];
+  }
+
+  /* Eyebrow label — small uppercase tag */
+  .eyebrow {
+    @apply text-[11px] uppercase tracking-[0.18em] font-semibold text-fog-500;
+  }
+}

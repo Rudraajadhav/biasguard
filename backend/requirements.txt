@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pandas==2.2.3
+yfinance==1.4.0
+bcrypt
+python-jose[cryptography]
+python-multipart
