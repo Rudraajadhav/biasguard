@@ -22,9 +22,14 @@ Run:
 import json
 from datetime import datetime
 
+import os
+
 import pandas as pd
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel, EmailStr
 from sqlalchemy.orm import Session
@@ -44,13 +49,22 @@ from database import (
 app = FastAPI(title="BiasGuard API", version="1.0")
 
 # CORS — allow the React dev server to call the API
+limiter = Limiter(key_func=get_remote_address)
+
+ALLOWED_ORIGINS = ["http://localhost:3000", "http://localhost:5173"]
+_extra = os.environ.get("BIASGUARD_ALLOWED_ORIGINS", "")
+ALLOWED_ORIGINS += [o.strip() for o in _extra.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
 @app.on_event("startup")
@@ -98,7 +112,9 @@ class TradeResponse(BaseModel):
 # AUTH ENDPOINTS
 # ----------------------------------------------------------------
 @app.post("/signup", response_model=TokenResponse)
-def signup(req: SignupRequest, db: Session = Depends(get_db)):
+@limiter.limit("5/minute")
+def signup(request: Request, req: SignupRequest,
+           db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.email == req.email).first()
     if existing:
         raise HTTPException(
@@ -121,7 +137,9 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
 
 
 @app.post("/login", response_model=TokenResponse)
-def login(form: OAuth2PasswordRequestForm = Depends(),
+@limiter.limit("5/minute")
+def login(request: Request,
+          form: OAuth2PasswordRequestForm = Depends(),
           db: Session = Depends(get_db)):
     # OAuth2PasswordRequestForm uses 'username' — we treat it as email
     user = db.query(User).filter(User.email == form.username).first()

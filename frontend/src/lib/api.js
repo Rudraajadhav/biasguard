@@ -1,7 +1,7 @@
 // BiasGuard — API client
 // Thin wrapper around fetch() for talking to the FastAPI backend.
 
-const BASE = 'http://localhost:8000'
+const BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 // --- token storage (in-memory + localStorage mirror) -------------
 function getToken() {

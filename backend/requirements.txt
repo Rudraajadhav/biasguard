@@ -6,3 +6,4 @@ yfinance==1.4.0
 bcrypt
 python-jose[cryptography]
 python-multipart
+slowapi
