@@ -60,9 +60,18 @@
 
   /* Input fields */
   .field {
-    @apply w-full bg-ink-900 border border-ink-600 rounded-lg px-4 py-3
+    @apply w-full min-w-0 bg-ink-900 border border-ink-600 rounded-lg px-4 py-3
            text-fog-100 placeholder-fog-500 outline-none transition-all
            focus:border-mint focus:shadow-glow;
+  }
+
+  /* Mobile: native date inputs have stubborn intrinsic width; force them
+     to respect the container, and keep their height once un-styled */
+  input[type='date'].field {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    min-height: 3rem;
   }
 
   /* Primary button */

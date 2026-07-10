@@ -239,7 +239,7 @@ function FlagRow({ flag, tone, type }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
-      className="flex items-center gap-4 px-4 py-3 rounded-lg
+      className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 rounded-lg
                  bg-ink-900 border border-ink-600"
     >
       <span className="px-2 py-1 rounded text-[11px] font-semibold"
@@ -247,9 +247,8 @@ function FlagRow({ flag, tone, type }) {
         {type}
       </span>
       <span className="font-mono font-semibold text-sm">{ticker}</span>
-      <span className="nums text-xs text-fog-500">{date}</span>
-      <div className="flex-1" />
-      <div className="text-right">
+      <span className="nums text-xs text-fog-500 whitespace-nowrap">{date}</span>
+      <div className="text-right ml-auto">
         <div className="text-[11px] text-fog-500 uppercase tracking-wider">
           Confidence
         </div>
